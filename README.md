@@ -2,7 +2,7 @@
 
 ## Descripción
 Landing page interactiva de un videojuego tipo tower defense medieval.
-Incluye personalización del usuario e ինտeracciones dinámicas con JavaScript.
+Incluye personalización del usuario e interaccion dinámica con JavaScript.
 
 ## Tecnologías
 - HTML
@@ -21,3 +21,4 @@ Incluye personalización del usuario e ինտeracciones dinámicas con JavaScrip
 2. Abrir index.html en el navegador
 
 ## Repositorio
+ https://lau6taro.github.io/SHADOW-CAVES/
