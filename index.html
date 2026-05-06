@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVES OF SHADOWS — Tower Defense Medieval</title>
+  <meta name="description" content="Caves of Shadows — Un tower defense medieval de oscuridad épica. Defiende tu reino de las criaturas de las cavernas." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=MedievalSharp&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================
+       CURSOR PERSONALIZADO
+  ============================= -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <!-- ============================
+       PARTÍCULAS DE FONDO
+  ============================= -->
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <!-- ============================
+       HEADER / NAVEGACIÓN
+  ============================= -->
+  <header class="header" id="header">
+    <div class="header__inner">
+
+      <!-- Logo -->
+      <a href="#inicio" class="header__logo" aria-label="Caves of Shadows - Inicio">
+        <div class="logo-emblem" aria-hidden="true">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="30,3 57,20 57,40 30,57 3,40 3,20" stroke="var(--accent-gold)" stroke-width="1.5" fill="none"/>
+            <polygon points="30,10 50,22 50,38 30,50 10,38 10,22" stroke="var(--accent-cyan)" stroke-width="1" fill="none" opacity="0.5"/>
+            <path d="M20 38 L30 12 L40 38 M24 30 H36" stroke="var(--accent-gold)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="30" cy="12" r="2" fill="var(--accent-cyan)"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-text__main">CAVES</span>
+          <span class="logo-text__sub">OF SHADOWS</span>
+        </div>
+      </a>
+
+      <!-- Navegación principal -->
+      <nav class="nav" id="nav" aria-label="Navegación principal">
+        <ul class="nav__list">
+          <li><a href="#inicio"     class="nav__link" data-section="inicio">Inicio</a></li>
+          <li><a href="#historia"   class="nav__link" data-section="historia">Historia</a></li>
+          <li><a href="#personajes" class="nav__link" data-section="personajes">Personajes</a></li>
+          <li><a href="#gameplay"   class="nav__link" data-section="gameplay">Gameplay</a></li>
+          <li><a href="#comunidad"  class="nav__link" data-section="comunidad">Comunidad</a></li>
+        </ul>
+      </nav>
+
+      <!-- Controles del header -->
+      <div class="header__controls">
+        <!-- Botón Modo Oscuro/Claro (DOM #1) -->
+        <button
+          class="btn-theme"
+          id="btnTheme"
+          aria-label="Cambiar modo de color"
+          title="Cambiar tema"
+        >
+          <span class="btn-theme__icon btn-theme__icon--dark" aria-hidden="true">🌙</span>
+          <span class="btn-theme__icon btn-theme__icon--light" aria-hidden="true">☀️</span>
+        </button>
+
+        <!-- Botón hamburguesa (mobile) -->
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================
+       MAIN
+  ============================= -->
+  <main>
+
+    <!-- ============================
+         HERO SECTION
+    ============================= -->
+    <section class="hero" id="inicio" aria-labelledby="heroTitle">
+
+      <!-- Capas decorativas de fondo -->
+      <div class="hero__bg" aria-hidden="true">
+        <div class="hero__bg-cave"></div>
+        <div class="hero__bg-fog"></div>
+        <div class="hero__bg-grid"></div>
+      </div>
+
+      <!-- Torres decorativas -->
+      <div class="hero__towers" aria-hidden="true">
+        <div class="tower tower--left">
+          <div class="tower__body"></div>
+          <div class="tower__battlements">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="tower__glow"></div>
+        </div>
+        <div class="tower tower--right">
+          <div class="tower__body"></div>
+          <div class="tower__battlements">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="tower__glow"></div>
+        </div>
+      </div>
+
+      <!-- Contenido del hero -->
+      <div class="hero__content">
+
+        <p class="hero__pretitle" aria-label="Nuevo juego">⚔ TOWER DEFENSE MEDIEVAL ⚔</p>
+
+        <h1 class="hero__title" id="heroTitle">
+          <span class="hero__title-caves">CAVES</span>
+          <span class="hero__title-of">OF</span>
+          <span class="hero__title-shadows">SHADOWS</span>
+        </h1>
+
+        <p class="hero__slogan">
+          Las sombras han despertado.<br/>
+          Solo <strong class="hero__protagonist-name" id="protagonistName">el Guardián</strong> puede detenerlas.
+        </p>
+
+        <!-- Input personalización de nombre (DOM #2) -->
+        <div class="hero__name-changer">
+          <label for="inputProtagonist" class="hero__name-label">
+            ✦ Personaliza tu héroe
+          </label>
+          <div class="hero__name-input-group">
+            <input
+              type="text"
+              id="inputProtagonist"
+              class="hero__name-input"
+              placeholder="Nombre del protagonista…"
+              maxlength="24"
+              autocomplete="off"
+              aria-describedby="protagonistHint"
+            />
+            <button class="btn btn--outline" id="btnSetName">Confirmar</button>
+          </div>
+          <span id="protagonistHint" class="sr-only">El nombre aparecerá en el párrafo del héroe</span>
+        </div>
+
+        <!-- CTAs -->
+        <div class="hero__ctas">
+          <button class="btn btn--primary" id="btnTrailer">
+            <span class="btn__icon" aria-hidden="true">▶</span>
+            Ver Trailer
+          </button>
+          <a href="#gameplay" class="btn btn--secondary">
+            <span class="btn__icon" aria-hidden="true">⚔</span>
+            Explorar Gameplay
+          </a>
+        </div>
+
+        <!-- Stats rápidos -->
+        <div class="hero__stats" aria-label="Estadísticas del juego">
+          <div class="hero__stat">
+            <span class="hero__stat-value">14+</span>
+            <span class="hero__stat-label">Torres</span>
+          </div>
+          <div class="hero__stat-divider" aria-hidden="true">✦</div>
+          <div class="hero__stat">
+            <span class="hero__stat-value">5</span>
+            <span class="hero__stat-label">biomas</span>
+          </div>
+          <div class="hero__stat-divider" aria-hidden="true">✦</div>
+          <div class="hero__stat">
+            <span class="hero__stat-value">15+</span>
+            <span class="hero__stat-label">oleadas</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="hero__scroll" aria-hidden="true">
+        <span class="hero__scroll-text"></span>
+        <div class="hero__scroll-arrow"></div>
+      </div>
+
+    </section>
+
+    <!-- ============================
+         EASTER EGG / TRAILER FALSO (DOM #3)
+    ============================= -->
+    <div class="trailer-overlay" id="trailerOverlay" role="dialog" aria-modal="true" aria-label="Trailer del juego" hidden>
+      <div class="trailer-box">
+        <button class="trailer-box__close" id="btnCloseTrailer" aria-label="Cerrar trailer">✕</button>
+        <div class="trailer-box__screen">
+          <div class="trailer-box__scanlines" aria-hidden="true"></div>
+          <div class="trailer-box__content">
+            <p class="trailer-box__label">📽 TRAILER OFICIAL</p>
+            <h2 class="trailer-box__title">CAVES OF SHADOWS</h2>
+            <p class="trailer-box__subtitle">— Launch Trailer 2025 —</p>
+            <div class="trailer-box__fake-video" aria-label="Video simulado">
+              <div class="fake-video__play-area">
+                <div class="fake-video__icon" aria-hidden="true">▶</div>
+                <p class="fake-video__text">
+                  <em>"Este es un trailer conceptual.<br/>
+                  El juego completo llega en 2026."</em>
+                </p>
+              </div>
+              <div class="fake-video__progress">
+                <div class="fake-video__bar" id="videoBar"></div>
+              </div>
+              <div class="fake-video__timer" id="videoTimer">0:00 / 2:34</div>
+            </div>
+          </div>
+        </div>
+        <!-- Easter Egg secreto dentro del trailer (DOM #4) -->
+        <div class="easter-egg" id="easterEgg">
+          <button class="easter-egg__trigger" id="btnEasterEgg" aria-expanded="false">
+            🗝 ¿Hay algo oculto aquí?
+          </button>
+          <div class="easter-egg__content" id="easterEggContent" hidden>
+            <p class="easter-egg__text">
+              🐉 <strong>¡CÓDIGO SECRETO DESBLOQUEADO!</strong><br/>
+              Introduce <code>SHADOWGUARD</code> al comenzar el juego<br/>
+              para desbloquear el personaje legendario: <em>Malachar el Eterno</em>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================
+         SECCIÓN HISTORIA / LORE
+    ============================= -->
+    <section class="section lore" id="historia" aria-labelledby="loreTitle">
+      <div class="section__inner">
+
+        <header class="section__header">
+          <p class="section__eyebrow">El Mundo</p>
+          <h2 class="section__title" id="loreTitle">La Leyenda de las Cavernas</h2>
+          <div class="section__divider" aria-hidden="true">
+            <span>✦</span><span>⚔</span><span>✦</span>
+          </div>
+        </header>
+
+        <div class="lore__grid">
+
+          <div class="lore__text">
+            <p class="lore__paragraph lore__paragraph--lead">
+              En las profundidades del reino de <strong>Valdermoor</strong>, bajo montañas
+              que nunca vieron la luz del sol, duermen criaturas forjadas en la oscuridad
+              primordial. Durante siglos, los hombres construyeron muros, torres y fortalezas
+              para mantenerlas a raya.
+            </p>
+            <p class="lore__paragraph">
+              Pero la noche del <em>Equinoccio Roto</em>, los sellos milenarios cedieron.
+              Las cavernas vomitaron sus hordas sobre las tierras del norte. Ciudad tras ciudad
+              cayó ante las garras de los <strong>Sombríos</strong> —seres sin forma que
+              devoran la luz y la esperanza.
+            </p>
+            <p class="lore__paragraph">
+              Ahora, como último guardián de la Ciudadela de Piedra Gris, debes erigir
+              defensas, reclutar héroes y descifrar los secretos de la magia rúnica para
+              sobrevivir las noches interminables.
+            </p>
+            <blockquote class="lore__quote">
+              <p>"Las sombras no se conquistan con espadas. Se vencen con fuego, ingenio y la voluntad de no rendirse jamás."</p>
+              <cite>— Archimago Seraphis, <em>Crónicas de Valdermoor</em></cite>
+            </blockquote>
+          </div>
+
+          <div class="lore__visual" aria-hidden="true">
+            <div class="lore__map">
+              <div class="lore__map-inner">
+                <svg viewBox="0 0 300 300" class="lore__map-svg" aria-hidden="true">
+                  <!-- Terreno -->
+                  <rect width="300" height="300" fill="var(--bg-deep)" rx="4"/>
+                  <!-- Montañas -->
+                  <polygon points="50,200 80,140 110,200" fill="none" stroke="var(--accent-gold)" stroke-width="1.5" opacity="0.6"/>
+                  <polygon points="90,200 130,120 170,200" fill="none" stroke="var(--accent-gold)" stroke-width="1.5" opacity="0.6"/>
+                  <polygon points="160,200 200,130 240,200" fill="none" stroke="var(--accent-gold)" stroke-width="1.5" opacity="0.6"/>
+                  <!-- Río -->
+                  <path d="M10,180 Q80,160 150,190 Q220,220 290,200" fill="none" stroke="var(--accent-cyan)" stroke-width="2" opacity="0.5"/>
+                  <!-- Ciudadela -->
+                  <rect x="130" y="90" width="40" height="35" fill="none" stroke="var(--accent-gold)" stroke-width="2"/>
+                  <rect x="126" y="80" width="12" height="15" fill="none" stroke="var(--accent-gold)" stroke-width="1.5"/>
+                  <rect x="162" y="80" width="12" height="15" fill="none" stroke="var(--accent-gold)" stroke-width="1.5"/>
+                  <circle cx="150" cy="107" r="4" fill="var(--accent-gold)" opacity="0.8"/>
+                  <!-- Texto mapa -->
+                  <text x="150" y="145" text-anchor="middle" fill="var(--accent-cyan)" font-size="9" font-family="Cinzel, serif" opacity="0.8">CIUDADELA</text>
+                  <text x="150" y="157" text-anchor="middle" fill="var(--accent-cyan)" font-size="7" font-family="Cinzel, serif" opacity="0.6">de Piedra Gris</text>
+                  <!-- Bosques -->
+                  <circle cx="40" cy="100" r="15" fill="none" stroke="var(--accent-purple)" stroke-width="1" opacity="0.4"/>
+                  <circle cx="260" cy="90" r="18" fill="none" stroke="var(--accent-purple)" stroke-width="1" opacity="0.4"/>
+                  <text x="40" y="125" text-anchor="middle" fill="var(--text-muted)" font-size="7" font-family="Cinzel, serif" opacity="0.5">Bosque</text>
+                  <text x="260" y="116" text-anchor="middle" fill="var(--text-muted)" font-size="7" font-family="Cinzel, serif" opacity="0.5">Bosque</text>
+                  <!-- Cueva -->
+                  <path d="M230,250 Q250,230 270,250 Q260,270 250,265 Q240,270 230,250Z" fill="none" stroke="var(--accent-pink)" stroke-width="1.5" opacity="0.7"/>
+                  <text x="250" y="285" text-anchor="middle" fill="var(--accent-pink)" font-size="7" font-family="Cinzel, serif" opacity="0.8">CAVERNAS</text>
+                  <!-- Rutas -->
+                  <line x1="150" y1="125" x2="250" y2="250" stroke="var(--accent-gold)" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+                  <!-- Brújula -->
+                  <g transform="translate(20,20)">
+                    <circle cx="0" cy="0" r="14" fill="none" stroke="var(--accent-gold)" stroke-width="1" opacity="0.5"/>
+                    <line x1="0" y1="-10" x2="0" y2="10" stroke="var(--accent-cyan)" stroke-width="1.5"/>
+                    <line x1="-10" y1="0" x2="10" y2="0" stroke="var(--text-muted)" stroke-width="1"/>
+                    <text y="-16" text-anchor="middle" fill="var(--accent-gold)" font-size="8" font-family="Cinzel, serif">N</text>
+                  </g>
+                </svg>
+                <p class="lore__map-caption">Mapa de Valdermoor — Año 847 A.E.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Hechos del lore -->
+        <div class="lore__facts">
+          <div class="lore__fact">
+            <span class="lore__fact-icon" aria-hidden="true">🏰</span>
+            <h3 class="lore__fact-title">Valdermoor</h3>
+            <p>Reino milenario de piedra y sangre. Sus torres resisten desde el Primer Frío.</p>
+          </div>
+          <div class="lore__fact">
+            <span class="lore__fact-icon" aria-hidden="true">🌑</span>
+            <h3 class="lore__fact-title">Los Sombríos</h3>
+            <p>Criaturas sin forma ni nombre. Se alimentan de luz y memoria.</p>
+          </div>
+          <div class="lore__fact">
+            <span class="lore__fact-icon" aria-hidden="true">🔮</span>
+            <h3 class="lore__fact-title">Magia Rúnica</h3>
+            <p>El único poder capaz de herir a las sombras. Su fuente es limitada y peligrosa.</p>
+          </div>
+          <div class="lore__fact">
+            <span class="lore__fact-icon" aria-hidden="true">⚔️</span>
+            <h3 class="lore__fact-title">El Equinoccio Roto</h3>
+            <p>La noche en que todos los sellos fallaron. El inicio del fin… o del comienzo.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================
+         SECCIÓN PERSONAJES (Galería DOM #5)
+    ============================= -->
+    <section class="section characters" id="personajes" aria-labelledby="charactersTitle">
+      <div class="section__inner">
+
+        <header class="section__header">
+          <p class="section__eyebrow">Los Defensores</p>
+          <h2 class="section__title" id="charactersTitle">Personajes</h2>
+          <div class="section__divider" aria-hidden="true">
+            <span>✦</span><span>⚔</span><span>✦</span>
+          </div>
+        </header>
+
+        <!-- Visor principal de personaje -->
+        <div class="characters__showcase">
+
+          <div class="characters__viewer" id="characterViewer">
+            <div class="characters__viewer-frame" aria-hidden="true">
+              <!-- Marco decorativo -->
+              <div class="viewer-corner viewer-corner--tl"></div>
+              <div class="viewer-corner viewer-corner--tr"></div>
+              <div class="viewer-corner viewer-corner--bl"></div>
+              <div class="viewer-corner viewer-corner--br"></div>
+            </div>
+            <!-- Avatar del personaje -->
+            <div class="characters__avatar" id="characterAvatar" aria-live="polite" aria-atomic="true">
+              <!-- El contenido se inyecta via JS -->
+            </div>
+            <!-- Info del personaje -->
+            <div class="characters__info" id="characterInfo">
+              <!-- El contenido se inyecta via JS -->
+            </div>
+          </div>
+
+          <!-- Miniaturas de personajes (galería clicable) -->
+          <div class="characters__thumbnails" role="tablist" aria-label="Seleccionar personaje" id="characterThumbnails">
+            <!-- Generadas por JS -->
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================
+         SECCIÓN GAMEPLAY
+    ============================= -->
+    <section class="section gameplay" id="gameplay" aria-labelledby="gameplayTitle">
+      <div class="section__inner">
+
+        <header class="section__header">
+          <p class="section__eyebrow">Mecánicas</p>
+          <h2 class="section__title" id="gameplayTitle">Gameplay a implementar</h2>
+          <div class="section__divider" aria-hidden="true">
+            <span>✦</span><span>⚔</span><span>✦</span>
+          </div>
+        </header>
+
+        <!-- Features grid -->
+        <div class="gameplay__features">
+
+          <article class="feature-card" tabindex="0">
+            <div class="feature-card__icon" aria-hidden="true">🏗</div>
+            <h3 class="feature-card__title">Construcción Táctica</h3>
+            <p class="feature-card__desc">
+              Coloca más de 12 tipos de torres en posiciones estratégicas.
+              Cada torre tiene habilidades únicas: arqueros, magos rúnicos,
+              balistas de hielo y cañones de lava.
+            </p>
+            <ul class="feature-card__list" aria-label="Detalles">
+              <li>Sistema de cuadrícula dinámico</li>
+              <li>Mejoras de hasta 3 niveles</li>
+              <li>Combos de sinergias</li>
+            </ul>
+          </article>
+
+          <article class="feature-card" tabindex="0">
+            <div class="feature-card__icon" aria-hidden="true">🌊</div>
+            <h3 class="feature-card__title">Hordas Procedurales</h3>
+            <p class="feature-card__desc">
+              Cada ola es generada algorítmicamente. No hay dos partidas iguales:
+              14+ enemigos.
+            </p>
+            <ul class="feature-card__list">
+              <li>IA enemiga adaptativa</li>
+              <li>Jefes cada 10 oleadas</li>
+              <li>Eventos de oro y exp extra</li>
+            </ul>
+          </article>
+
+          <article class="feature-card" tabindex="0">
+            <div class="feature-card__icon" aria-hidden="true">✨</div>
+            <h3 class="feature-card__title">Magia Rúnica</h3>
+            <p class="feature-card__desc">
+              sistema de evolucion por niveles o fusion.
+            </p>
+            <ul class="feature-card__list">
+              <li>Sistema de combinado</li>
+              <li>22+ torres combinables</li>
+              <li>Árbol de investigación mágica</li>
+            </ul>
+          </article>
+
+          <article class="feature-card" tabindex="0">
+            <div class="feature-card__icon" aria-hidden="true">🗺</div>
+            <h3 class="feature-card__title">Campaña Épica</h3>
+            <p class="feature-card__desc">
+              5 biomas únicos desde tundras heladas hasta volcanes activos.
+              Cada nivel oculta secretos, reliquias perdidas y portales a dimensiones
+              oscuras olvidadas por el tiempo.
+            </p>
+            <ul class="feature-card__list">
+              <li>80+ misiones principales</li>
+              <li>Decisiones y consecuencias</li>
+              <li>Final a implementar</li>
+            </ul>
+          </article>
+
+          <article class="feature-card" tabindex="0">
+            <div class="feature-card__icon" aria-hidden="true">🛡</div>
+            <h3 class="feature-card__title">Héroes y Ejércitos</h3>
+            <p class="feature-card__desc">
+              Recluta leyendas del reino y lidera ejércitos completos.
+              Cada héroe tiene un árbol de habilidades único y puede montar
+              criaturas especiales capturadas en batalla.
+            </p>
+            <ul class="feature-card__list">
+              <li>5 héroes jugables</li>
+              <li>Sistema de aumentos</li>
+              <li>unidades unicas</li>
+            </ul>
+          </article>
+
+          <article class="feature-card" tabindex="0">
+            <div class="feature-card__icon" aria-hidden="true">⚡</div>
+            <h3 class="feature-card__title">Modo Supervivencia(online a futuro)</h3>
+            <p class="feature-card__desc">
+              Cuando la campaña no es suficiente: oleadas infinitas con recursos
+              limitados y un marcador global. Cada semana, una maldición especial
+              que cambia las reglas del juego.
+            </p>
+            <ul class="feature-card__list">
+              <li>Tabla de clasificación global</li>
+              <li>Desafíos semanales</li>
+              <li>Recompensas exclusivas</li>
+            </ul>
+          </article>
+
+        </div>
+
+        <!-- Plataformas -->
+        <div class="gameplay__platforms">
+          <p class="gameplay__platforms-label">Disponible en</p>
+          <div class="gameplay__platforms-list" aria-label="Plataformas disponibles">
+            <div class="platform-badge">
+              <span class="platform-badge__icon" aria-hidden="true">🖥</span>
+              <span>PC</span>
+            </div>
+            <div class="platform-badge">
+              <span class="platform-badge__icon" aria-hidden="true">🎮</span>
+              <span>Console</span>
+            </div>
+            <div class="platform-badge">
+              <span class="platform-badge__icon" aria-hidden="true">📱</span>
+              <span>Mobile</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================
+         SECCIÓN COMUNIDAD + SUSCRIPCIÓN
+    ============================= -->
+    <section class="section community" id="comunidad" aria-labelledby="communityTitle">
+      <div class="section__inner">
+
+        <header class="section__header">
+          <p class="section__eyebrow">Únete</p>
+          <h2 class="section__title" id="communityTitle">Comunidad</h2>
+          <div class="section__divider" aria-hidden="true">
+            <span>✦</span><span>⚔</span><span>✦</span>
+          </div>
+        </header>
+
+        <div class="community__layout">
+
+          <!-- Formulario de suscripción (DOM #6 — validación + mensaje éxito) -->
+          <div class="community__form-area">
+            <h3 class="community__form-title">¡Sé el primero en jugar!</h3>
+            <p class="community__form-desc">
+              Regístrate en la lista de acceso anticipado y recibe noticias
+              exclusivas del desarrollo, artículos conceptuales y una clave beta.
+            </p>
+
+            <div class="subscription-form" id="subscriptionForm" novalidate>
+
+              <div class="form-group" id="groupName">
+                <label for="inputName" class="form-label">
+                  Nombre del Guardián
+                  <span class="form-label__required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="inputName"
+                  class="form-input"
+                  placeholder="¿Cómo te llamarán los bardos?"
+                  autocomplete="given-name"
+                  aria-required="true"
+                  aria-describedby="nameError"
+                />
+                <span class="form-error" id="nameError" role="alert" aria-live="assertive"></span>
+              </div>
+
+              <div class="form-group" id="groupEmail">
+                <label for="inputEmail" class="form-label">
+                  Correo del Pergamino
+                  <span class="form-label__required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="inputEmail"
+                  class="form-input"
+                  placeholder="tu@correo.com"
+                  autocomplete="email"
+                  aria-required="true"
+                  aria-describedby="emailError"
+                />
+                <span class="form-error" id="emailError" role="alert" aria-live="assertive"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label form-label--checkbox">
+                  <input type="checkbox" id="inputConsent" class="form-checkbox" aria-required="true" />
+                  <span class="form-checkbox__custom" aria-hidden="true"></span>
+                  Acepto recibir noticias sobre <em>Caves of Shadows</em>
+                </label>
+                <span class="form-error" id="consentError" role="alert" aria-live="assertive"></span>
+              </div>
+
+              <button type="button" class="btn btn--primary btn--full" id="btnSubscribe">
+                <span class="btn__icon" aria-hidden="true">⚔</span>
+                Unirme a los Guardianes
+              </button>
+
+              <!-- Mensaje de éxito (oculto por defecto) -->
+              <div class="form-success" id="formSuccess" hidden role="status" aria-live="polite">
+                <div class="form-success__icon" aria-hidden="true">✦</div>
+                <p class="form-success__title">¡Bienvenido, Guardián!</p>
+                <p class="form-success__text">
+                  Tu nombre ha sido inscrito en los Anales de Valdermoor.
+                  Recibirás noticias de la beta muy pronto.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Social & info lateral -->
+          <div class="community__social-area">
+            <h3 class="community__social-title">La Hermandad</h3>
+            <p class="community__social-desc">
+              Más de <strong>10 guardianes</strong> ya forman parte
+              de la comunidad. Comparte estrategias, fanart y encuentra
+              compañeros de batalla.
+            </p>
+
+            <nav class="social-links" aria-label="Redes sociales">
+              <a href="https://discord.gg/gQdeY37Hr" target="_blank" rel="noopener noreferrer" class="social-link social-link--discord" aria-label="Discord de Caves of Shadows">
+                <span class="social-link__icon" aria-hidden="true">💬</span>
+                <div>
+                  <span class="social-link__platform">Discord</span>
+                  <span class="social-link__handle">discord.gg/caves-of-shadows</span>
+                </div>
+              </a>
+              <a href="#" class="social-link social-link--twitter" aria-label="Twitter de Caves of Shadows">
+                <span class="social-link__icon" aria-hidden="true">𝕏</span>
+                <div>
+                  <span class="social-link__platform">Twitter / X</span>
+                  <span class="social-link__handle">@CavesOfShadows</span>
+                </div>
+              </a>
+              <a href="#" class="social-link social-link--reddit" aria-label="Reddit de Caves of Shadows">
+                <span class="social-link__icon" aria-hidden="true">🔴</span>
+                <div>
+                  <span class="social-link__platform">Reddit</span>
+                  <span class="social-link__handle">r/CavesOfShadows</span>
+                </div>
+              </a>
+              <a href="#" class="social-link social-link--youtube" aria-label="YouTube de Caves of Shadows">
+                <span class="social-link__icon" aria-hidden="true">▶</span>
+                <div>
+                  <span class="social-link__platform">YouTube</span>
+                  <span class="social-link__handle">Caves of Shadows Official</span>
+                </div>
+              </a>
+            </nav>
+
+            <!-- Contador comunidad animado -->
+            <div class="community__counter" aria-label="Guardianes registrados">
+              <div class="community__counter-value" id="counterValue">11</div>
+              <div class="community__counter-label">Guardianes registrados</div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================
+       FOOTER
+  ============================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+
+      <div class="footer__brand">
+        <div class="footer__logo">
+          <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <polygon points="20,2 38,13 38,27 20,38 2,27 2,13" stroke="var(--accent-gold)" stroke-width="1" fill="none"/>
+            <path d="M13 26 L20 8 L27 26 M16 20 H24" stroke="var(--accent-gold)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>CAVES OF SHADOWS</span>
+        </div>
+        <p class="footer__tagline">
+          Un juego de <strong>transparent grey Studios</strong> — Indie Game Dev
+        </p>
+        <p class="footer__copy">
+          © 2025 transparent grey Studios. Todos los derechos reservados.<br/>
+          <small>Proyecto ficticio con fines educativos. Trabajo Práctico Integrador.</small>
+        </p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Navegación del footer">
+        <div class="footer__nav-col">
+          <h4 class="footer__nav-title">Juego</h4>
+          <ul>
+            <li><a href="#historia">Historia</a></li>
+            <li><a href="#personajes">Personajes</a></li>
+            <li><a href="#gameplay">Gameplay</a></li>
+            <li><a href="#comunidad">Comunidad</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4 class="footer__nav-title">Estudio</h4>
+          <ul>
+            <li><a href="#">Sobre nosotros</a></li>
+            <li><a href="#">Blog de desarrollo</a></li>
+            <li><a href="#">Prensa / Media Kit</a></li>
+            <li><a href="#">Empleo</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4 class="footer__nav-title">Legal</h4>
+          <ul>
+            <li><a href="#">Términos de uso</a></li>
+            <li><a href="#">Política de privacidad</a></li>
+            <li><a href="#">Cookies</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    </div>
+
+    <!-- Barra decorativa inferior -->
+    <div class="footer__bar" aria-hidden="true">
+      <div class="footer__bar-inner">
+        <span>⚔</span>
+        <span>DEFEND THE LIGHT — CONQUER THE DARK</span>
+        <span>⚔</span>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Botón scroll to top -->
+  <button class="scroll-top" id="scrollTop" aria-label="Volver arriba" title="Volver al inicio" hidden>
+    ▲
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
